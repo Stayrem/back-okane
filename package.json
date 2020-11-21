@@ -1,0 +1,28 @@
+{
+  "name": "back-okane",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app",
+    "dev": "nodemon ./src/app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InNOcentos/back-okane.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InNOcentos/back-okane/issues"
+  },
+  "homepage": "https://github.com/InNOcentos/back-okane#readme",
+  "devDependencies": {
+    "nodemon": "2.0.6"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "morgan": "1.10.0"
+  }
+}
