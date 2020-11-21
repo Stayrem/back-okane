@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
-app.listen(process.env.PORT || PORT, (err) => {
+app.listen(PORT, (err) => {
   console.log(`Listening on ${PORT}`);
   if (err) {
     console.error(`Server can't start. Error: ${err}`);
