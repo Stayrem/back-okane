@@ -1,5 +1,6 @@
 const Sequelize = require(`sequelize`);
 const config = require("../config");
+const { createModels } = require("./createModels");
 const { ExitCode } = require("../utlis/constants");
 
 const sequelize = new Sequelize(config.db.name, config.db.user_name, config.db.user_password, {
@@ -20,7 +21,10 @@ const initDb = async () => {
   await sequelize.close();
 };
 
+const models = createModels(sequelize);
+
 module.exports = {
   sequelize,
   initDb,
+  models,
 };
