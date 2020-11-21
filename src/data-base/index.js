@@ -9,19 +9,20 @@ const sequelize = new Sequelize(config.db.name, config.db.user_name, config.db.u
   logging: false,
 });
 
+const models = createModels(sequelize);
+
 const initDb = async () => {
   try {
-    await sequelize.sync();
-    console.info(`Структура БД успешно создана.`);
+    console.info(`Trying to connect to the database`);
+    const connection = await sequelize.sync();
+    console.info(`Successfully connected to the ${connection.config.database} database`);
   } catch (err) {
-    console.error(`Не удалось создать таблицы в БД ${err}`);
+    console.error(`Can't connect to database.Error: ${err}`);
     process.exit(ExitCode.error);
   }
 
   await sequelize.close();
 };
-
-const models = createModels(sequelize);
 
 module.exports = {
   sequelize,
