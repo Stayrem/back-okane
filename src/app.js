@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const { initDb } = require("./data-base");
+const { initDb } = require("./dataBase");
 const { PORT } = require("./utlis/constants");
 
 app.use(express.json());
