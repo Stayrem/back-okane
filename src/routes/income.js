@@ -7,10 +7,12 @@ const route = new Router();
 const incomeRouter = (app, incomeService) => {
   app.use("/incomes", route);
 
-  route.get("/", (req, res, next) => {
+  route.get("/", async (req, res, next) => {
     try {
       const { limit, date } = req.query;
-      const incomes = incomeService.findAll({ limit, date });
+      const user_id = req.headers["user_id"];
+      const incomes = await incomeService.findAll({ limit, date, user_id });
+      console.log(incomes);
       return res.status(HttpCode.OK).json(incomes);
     } catch (err) {
       console.log(`Can't get incomes. Error: ${err}`);
@@ -18,10 +20,12 @@ const incomeRouter = (app, incomeService) => {
     }
   });
 
-  route.post("/", (req, res, next) => {
+  route.post("/", async (req, res, next) => {
     try {
+      // TODO: будем получать user_ui из куков
       const { name, status, value, user_id } = req.body;
-      const newPost = incomeService.create({ name, status, value, user_id });
+      const newPost = await incomeService.create({ name, status, value, user_id });
+      console.log(newPost);
       return res.status(HttpCode.CREATED).json(newPost);
     } catch (err) {
       console.log(`Can't post incomes. Error: ${err}`);
