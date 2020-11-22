@@ -13,8 +13,9 @@ const userRouter = (app, userService) => {
 
   route.post("/", async (req, res, next) => {
     try {
+      console.log(req.body);
       const { email, password } = req.body;
-      const newUser = await userService.create(email, password);
+      const newUser = await userService.create({ email, password });
       return res.status(HttpCode.CREATED).json(newUser);
     } catch (err) {
       console.log(`Can't post. Error: ${err}`);
