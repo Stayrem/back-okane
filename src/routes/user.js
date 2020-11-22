@@ -5,7 +5,7 @@ const { HttpCode } = require("../utlis/constants");
 const route = new Router();
 
 const userRouter = (app, userService) => {
-  app.use("/user", route);
+  app.use("/users", route);
 
   route.get("/", (req, res, next) => {
     res.send("it works");
