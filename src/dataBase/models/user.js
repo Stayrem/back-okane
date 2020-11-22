@@ -2,6 +2,13 @@ const createModel = (sequelize, DataTypes) => {
   class User extends sequelize.Sequelize.Model {}
   User.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: sequelize.Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+      },
       email: {
         type: DataTypes.STRING(50),
         allowNull: false,
