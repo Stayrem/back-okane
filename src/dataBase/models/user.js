@@ -14,6 +14,7 @@ const createModel = (sequelize, DataTypes) => {
       sign_up_date: {
         field: `sign_up_date`,
         type: DataTypes.DATEONLY,
+        defaultValue: sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {

@@ -9,6 +9,7 @@ const createModel = (sequelize, DataTypes) => {
       date: {
         field: `date`,
         type: DataTypes.DATEONLY,
+        defaultValue: sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {
