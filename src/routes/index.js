@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const income = require("./income");
-
+const user = require("./user");
+const { UserService } = require("../dataService");
 const db = require("../dataBase");
 
 const app = new Router();
 
-income(app);
+user(app, new UserService(db));
 
 module.exports = app;
