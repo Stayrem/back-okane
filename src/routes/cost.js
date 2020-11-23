@@ -24,9 +24,9 @@ const costRouter = (app, costService) => {
     try {
       const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
-      const newPost = await costService.create({ name, status, value, user_id });
+      const newCost = await costService.create({ name, status, value, user_id });
 
-      return res.status(HttpCode.CREATED).json(newPost);
+      return res.status(HttpCode.CREATED).json(newCost);
     } catch (err) {
       console.log(`Can't post costs. Error: ${err}`);
       next(err);
@@ -37,9 +37,9 @@ const costRouter = (app, costService) => {
       const { costId } = req.params;
       const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
-      const updatedPost = await costService.update({ name, status, value, costId, user_id });
+      const updatedCost = await costService.update({ name, status, value, costId, user_id });
 
-      return res.status(HttpCode.OK).json(updatedPost);
+      return res.status(HttpCode.OK).json(updatedCost);
     } catch (err) {
       console.log(`Can't update cost. Error: ${err}`);
       next(err);
@@ -49,9 +49,9 @@ const costRouter = (app, costService) => {
     try {
       const { costId } = req.params;
       const user_id = req.headers["user_id"];
-      const deletedPost = await costService.delete({ costId, user_id });
+      const deletedCost = await costService.delete({ costId, user_id });
 
-      return res.status(HttpCode.OK).json(deletedPost);
+      return res.status(HttpCode.OK).json(deletedCost);
     } catch (err) {
       console.log(`Can't delete cost. Error: ${err}`);
       next(err);

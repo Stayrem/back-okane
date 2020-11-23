@@ -24,9 +24,9 @@ const incomeRouter = (app, incomeService) => {
     try {
       const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
-      const newPost = await incomeService.create({ name, status, value, user_id });
+      const newIncome = await incomeService.create({ name, status, value, user_id });
 
-      return res.status(HttpCode.CREATED).json(newPost);
+      return res.status(HttpCode.CREATED).json(newIncome);
     } catch (err) {
       console.log(`Can't post incomes. Error: ${err}`);
       next(err);
@@ -37,9 +37,9 @@ const incomeRouter = (app, incomeService) => {
       const { incomeId } = req.params;
       const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
-      const updatedPost = await incomeService.update({ name, status, value, incomeId, user_id });
+      const updatedIncome = await incomeService.update({ name, status, value, incomeId, user_id });
 
-      return res.status(HttpCode.OK).json(updatedPost);
+      return res.status(HttpCode.OK).json(updatedIncome);
     } catch (err) {
       console.log(`Can't update income. Error: ${err}`);
       next(err);
@@ -49,9 +49,9 @@ const incomeRouter = (app, incomeService) => {
     try {
       const { incomeId } = req.params;
       const user_id = req.headers["user_id"];
-      const deletedPost = await incomeService.delete({ incomeId, user_id });
+      const deletedIncome = await incomeService.delete({ incomeId, user_id });
 
-      return res.status(HttpCode.OK).json(deletedPost);
+      return res.status(HttpCode.OK).json(deletedIncome);
     } catch (err) {
       console.log(`Can't delete income. Error: ${err}`);
       next(err);
