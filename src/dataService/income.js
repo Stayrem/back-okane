@@ -3,9 +3,13 @@ class IncomeService {
     const { models } = database;
     this._database = database;
     this._models = models;
+    this._selectOptions = {
+      attributes: ["id", "name", "value", "status", "date"],
+      order: [[`date`, `DESC`]],
+    };
   }
   async create({ name, status, value, user_id }) {
-    const { User } = this._models;
+    const { User, Income } = this._models;
     try {
       const user = await User.findByPk(user_id);
       console.log(user);
@@ -15,13 +19,13 @@ class IncomeService {
         value,
         user_id,
       });
-      return { newIncome };
+      return await Income.findByPk(newIncome.id, this._selectOptions);
     } catch (err) {
       console.log(err);
       return false;
     }
   }
-  async findAll({ limit, date }) {
+  async findAll({ limit, date, user_id }) {
     const { sequelize } = this._database;
     const { Income } = this._models;
 
@@ -36,7 +40,9 @@ class IncomeService {
               "<=",
               new Date().toISOString().substring(0, 10)
             ),
+          user_id,
         },
+        ...this._selectOptions,
       });
       return { newIncome };
     } catch (err) {
