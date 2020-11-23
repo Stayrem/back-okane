@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const user = require("./user");
 const income = require("./income");
+const cost = require("./cost");
 const { UserService, IncomeService, CostService } = require("../dataService");
 const db = require("../dataBase");
 
