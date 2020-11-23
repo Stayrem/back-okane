@@ -32,6 +32,32 @@ const incomeRouter = (app, incomeService) => {
       next(err);
     }
   });
+  route.put("/:incomeId", async (req, res, next) => {
+    try {
+      const { incomeId } = req.params;
+      const { name, status, value } = req.body;
+      const user_id = req.headers["user_id"];
+      const updatedPost = await incomeService.update({ name, status, value, incomeId, user_id });
+
+      return res.status(HttpCode.OK).json(updatedPost);
+    } catch (err) {
+      console.log(`Can't update income. Error: ${err}`);
+      next(err);
+    }
+  });
+  route.delete("/:incomeId", async (req, res, next) => {
+    try {
+      const { incomeId } = req.params;
+      const { name, status, value } = req.body;
+      const user_id = req.headers["user_id"];
+      const deletedPost = await incomeService.delete({ name, status, value, incomeId, user_id });
+
+      return res.status(HttpCode.OK).json(deletedPost);
+    } catch (err) {
+      console.log(`Can't delete income. Error: ${err}`);
+      next(err);
+    }
+  });
 };
 
 module.exports = incomeRouter;
