@@ -48,9 +48,8 @@ const incomeRouter = (app, incomeService) => {
   route.delete("/:incomeId", async (req, res, next) => {
     try {
       const { incomeId } = req.params;
-      const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
-      const deletedPost = await incomeService.delete({ name, status, value, incomeId, user_id });
+      const deletedPost = await incomeService.delete({ incomeId, user_id });
 
       return res.status(HttpCode.OK).json(deletedPost);
     } catch (err) {
