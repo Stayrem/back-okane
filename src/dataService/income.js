@@ -8,22 +8,7 @@ class IncomeService {
       order: [[`date`, `DESC`]],
     };
   }
-  async create({ name, status, value, user_id }) {
-    const { User, Income } = this._models;
-    try {
-      const user = await User.findByPk(user_id);
-      const newIncome = await user.createIncome({
-        name,
-        status,
-        value,
-        user_id,
-      });
-      return await Income.findByPk(newIncome.id, this._selectOptions);
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
-  }
+
   async findAll({ limit, date, user_id }) {
     const { sequelize } = this._database;
     const { User } = this._models;
@@ -45,6 +30,65 @@ class IncomeService {
         ...this._selectOptions,
       });
       return { newIncome };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+  async create({ name, status, value, user_id }) {
+    const { User, Income } = this._models;
+    try {
+      const user = await User.findByPk(user_id);
+      const createNewIncome = await user.createIncome({
+        name,
+        status,
+        value,
+        user_id,
+      });
+      const newIncome = await Income.findByPk(createNewIncome.id, this._selectOptions);
+      return { newIncome };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  async update({ name, status, value, incomeId, user_id }) {
+    const { Income } = this._models;
+
+    try {
+      await Income.update(
+        {
+          name,
+          status,
+          value,
+        },
+        {
+          where: {
+            user_id,
+            id: incomeId,
+          },
+        }
+      );
+      const updatedIncome = await Income.findByPk(incomeId, this._selectOptions);
+      return { updatedIncome };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  async delete({ incomeId, user_id }) {
+    const { Income } = this._models;
+
+    try {
+      const incomeDeleteStatus = await Income.destroy({
+        where: {
+          user_id,
+          id: incomeId,
+        },
+      });
+      return { incomeDeleteStatus };
     } catch (err) {
       console.log(err);
       return false;
