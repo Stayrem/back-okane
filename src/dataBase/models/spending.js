@@ -13,7 +13,10 @@ const createModel = (sequelize, DataTypes) => {
       date: {
         field: `date`,
         type: DataTypes.DATEONLY,
-        defaultValue: sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: sequelize.Sequelize.NOW,
+        get: function () {
+          return moment.utc(this.getDataValue("date")).format("YYYY-MM-DD");
+        },
       },
     },
     {

@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 class CostService {
   constructor(database) {
     const { models } = database;
@@ -12,7 +14,7 @@ class CostService {
   async findAll({ limit, date, user_id }) {
     const { sequelize } = this._database;
     const { User } = this._models;
-
+    console.log(moment(new Date()).format("YYYY-MM-DD"));
     try {
       const user = await User.findByPk(user_id);
       const newCost = await user.getCosts({
@@ -20,11 +22,7 @@ class CostService {
         where: {
           date:
             date ||
-            sequelize.where(
-              sequelize.fn("date", sequelize.col("date")),
-              "<=",
-              new Date().toISOString().substring(0, 10)
-            ),
+            sequelize.where(sequelize.fn("date", sequelize.col("date")), "<=", moment(new Date()).format("YYYY-MM-DD")),
           user_id,
         },
         ...this._selectOptions,
