@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const createModel = (sequelize, DataTypes) => {
   class Spending extends sequelize.Sequelize.Model {}
   Spending.init(
