@@ -12,7 +12,6 @@ class IncomeService {
     const { User, Income } = this._models;
     try {
       const user = await User.findByPk(user_id);
-      console.log(user);
       const newIncome = await user.createIncome({
         name,
         status,
@@ -27,10 +26,11 @@ class IncomeService {
   }
   async findAll({ limit, date, user_id }) {
     const { sequelize } = this._database;
-    const { Income } = this._models;
+    const { User } = this._models;
 
     try {
-      const newIncome = await Income.findAll({
+      const user = await User.findByPk(user_id);
+      const newIncome = await user.getIncomes({
         limit: limit || 100,
         where: {
           date:
