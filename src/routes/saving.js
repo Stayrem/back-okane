@@ -22,13 +22,26 @@ const savingRouter = (app, savingService) => {
 
   route.post("/", async (req, res, next) => {
     try {
-      const { value } = req.body;
+      const { name, value } = req.body;
       const user_id = req.headers["user_id"];
-      const newSaving = await savingService.createOrUpdate({ value, user_id });
+      const newSaving = await savingService.create({ value, user_id });
 
-      return res.status(HttpCode.OK).json(newSaving);
+      return res.status(HttpCode.CREATED).json(newSaving);
     } catch (err) {
       console.log(`Can't post savings. Error: ${err}`);
+      next(err);
+    }
+  });
+  route.put("/:savingId", async (req, res, next) => {
+    try {
+      const { savingId } = req.params;
+      const { value } = req.body;
+      const user_id = req.headers["user_id"];
+      const updatedSaving = await savingService.update({ value, savingId, user_id });
+
+      return res.status(HttpCode.OK).json(updatedSaving);
+    } catch (err) {
+      console.log(`Can't update saving. Error: ${err}`);
       next(err);
     }
   });
