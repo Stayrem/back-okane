@@ -20,6 +20,19 @@ const savingRouter = (app, savingService) => {
     }
   });
 
+  route.get("/:savingId", async (req, res, next) => {
+    try {
+      const { savingId } = req.params;
+      const user_id = req.headers["user_id"];
+      const savings = await savingService.findOne({ user_id, savingId });
+
+      return res.status(HttpCode.OK).json(savings);
+    } catch (err) {
+      console.log(`Can't get savings. Error: ${err}`);
+      next(err);
+    }
+  });
+
   route.post("/", async (req, res, next) => {
     try {
       const { name, value } = req.body;

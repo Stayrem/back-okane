@@ -16,7 +16,7 @@ class SpendingService {
     const { User } = this._models;
     try {
       const user = await User.findByPk(user_id);
-      const newSpending = await user.getSpendings({
+      const spendings = await user.getSpendings({
         limit: limit || 100,
         where: {
           date:
@@ -26,12 +26,30 @@ class SpendingService {
         },
         ...this._selectOptions,
       });
-      return { newSpending };
+      return { spendings };
     } catch (err) {
       console.log(err);
       return false;
     }
   }
+
+  async findOne({ user_id, spendingId }) {
+    const { User } = this._models;
+    try {
+      const user = await User.findByPk(user_id);
+      const spending = await user.getSpendings({
+        where: {
+          id: spendingId,
+        },
+        ...this._selectOptions,
+      });
+      return { spending };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
   async create({ name, value, user_id }) {
     const { User, Spending } = this._models;
     try {

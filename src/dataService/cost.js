@@ -14,10 +14,9 @@ class CostService {
   async findAll({ limit, date, user_id }) {
     const { sequelize } = this._database;
     const { User } = this._models;
-    console.log(moment(new Date()).format("YYYY-MM-DD"));
     try {
       const user = await User.findByPk(user_id);
-      const newCost = await user.getCosts({
+      const costs = await user.getCosts({
         limit: limit || 100,
         where: {
           date:
@@ -27,12 +26,30 @@ class CostService {
         },
         ...this._selectOptions,
       });
-      return { newCost };
+      return { costs };
     } catch (err) {
       console.log(err);
       return false;
     }
   }
+
+  async findOne({ user_id, costId }) {
+    const { User } = this._models;
+    try {
+      const user = await User.findByPk(user_id);
+      const cost = await user.getCosts({
+        where: {
+          id: costId,
+        },
+        ...this._selectOptions,
+      });
+      return { cost };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
   async create({ name, status, value, user_id }) {
     const { User, Cost } = this._models;
     try {

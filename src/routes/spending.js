@@ -20,6 +20,19 @@ const spendingRouter = (app, spendingService) => {
     }
   });
 
+  route.get("/:spendingId", async (req, res, next) => {
+    try {
+      const { spendingId } = req.params;
+      const user_id = req.headers["user_id"];
+      const spendings = await spendingService.findOne({ user_id, spendingId });
+
+      return res.status(HttpCode.OK).json(spendings);
+    } catch (err) {
+      console.log(`Can't get spendings. Error: ${err}`);
+      next(err);
+    }
+  });
+
   route.post("/", async (req, res, next) => {
     try {
       const { name, value } = req.body;

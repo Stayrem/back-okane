@@ -9,9 +9,23 @@ const incomeRouter = (app, incomeService) => {
 
   route.get("/", async (req, res, next) => {
     try {
+      console.log(1);
       const { limit, date } = req.query;
       const user_id = req.headers["user_id"];
       const incomes = await incomeService.findAll({ limit, date, user_id });
+
+      return res.status(HttpCode.OK).json(incomes);
+    } catch (err) {
+      console.log(`Can't get incomes. Error: ${err}`);
+      next(err);
+    }
+  });
+
+  route.get("/:incomeId", async (req, res, next) => {
+    try {
+      const { incomeId } = req.params;
+      const user_id = req.headers["user_id"];
+      const incomes = await incomeService.findOne({ user_id, incomeId });
 
       return res.status(HttpCode.OK).json(incomes);
     } catch (err) {

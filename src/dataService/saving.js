@@ -16,7 +16,7 @@ class SavingService {
     const { User } = this._models;
     try {
       const user = await User.findByPk(user_id);
-      const newSaving = await user.getSavings({
+      const savings = await user.getSavings({
         limit: limit || 100,
         where: {
           date:
@@ -26,7 +26,24 @@ class SavingService {
         },
         ...this._selectOptions,
       });
-      return { newSaving };
+      return { savings };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  async findOne({ user_id, savingId }) {
+    const { User } = this._models;
+    try {
+      const user = await User.findByPk(user_id);
+      const saving = await user.getSavings({
+        where: {
+          id: savingId,
+        },
+        ...this._selectOptions,
+      });
+      return { saving };
     } catch (err) {
       console.log(err);
       return false;

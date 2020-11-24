@@ -20,6 +20,19 @@ const costRouter = (app, costService) => {
     }
   });
 
+  route.get("/:costId", async (req, res, next) => {
+    try {
+      const { costId } = req.params;
+      const user_id = req.headers["user_id"];
+      const costs = await costService.findOne({ user_id, costId });
+
+      return res.status(HttpCode.OK).json(costs);
+    } catch (err) {
+      console.log(`Can't get costs. Error: ${err}`);
+      next(err);
+    }
+  });
+
   route.post("/", async (req, res, next) => {
     try {
       const { name, status, value } = req.body;

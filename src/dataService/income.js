@@ -16,7 +16,7 @@ class IncomeService {
     const { User } = this._models;
     try {
       const user = await User.findByPk(user_id);
-      const newIncome = await user.getIncomes({
+      const incomes = await user.getIncomes({
         limit: limit || 100,
         where: {
           date:
@@ -26,12 +26,31 @@ class IncomeService {
         },
         ...this._selectOptions,
       });
-      return { newIncome };
+      console.log(incomes);
+      return { incomes };
     } catch (err) {
       console.log(err);
       return false;
     }
   }
+
+  async findOne({ user_id, incomeId }) {
+    const { User } = this._models;
+    try {
+      const user = await User.findByPk(user_id);
+      const income = await user.getIncomes({
+        where: {
+          id: incomeId,
+        },
+        ...this._selectOptions,
+      });
+      return { income };
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
   async create({ name, status, value, user_id }) {
     const { User, Income } = this._models;
     try {
