@@ -17,7 +17,7 @@ const createModel = (sequelize, DataTypes) => {
         unique: true,
       },
       password: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(150),
         allowNull: false,
       },
       sign_up_date: {

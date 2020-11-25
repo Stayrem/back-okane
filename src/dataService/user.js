@@ -1,3 +1,5 @@
+const { createHash } = require("../utlis/functions");
+
 class UserService {
   constructor(database) {
     const { models } = database;
@@ -8,9 +10,11 @@ class UserService {
   async create({ email, password }) {
     const { User } = this._models;
     try {
+      const hash = await createHash(password);
+      console.log(hash);
       const newUser = await User.create({
         email,
-        password,
+        password: hash,
       });
       return newUser;
     } catch (err) {

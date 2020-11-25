@@ -21,7 +21,7 @@ const initDb = async () => {
     process.exit(ExitCode.error);
   }
 
-  /*  await sequelize.close(); */
+  /* await sequelize.close(); */
 };
 
 module.exports = {
