@@ -21,16 +21,16 @@ const userRouter = (app, userService, refreshTokenService) => {
 
   route.post("/login", authenticateUser(userService), async (req, res, next) => {
     try {
-      const { id, email } = res.locals.user;
-      const { accessToken, refreshToken } = makeTokens({ id, email });
+      const { id: user_id, email: user_email } = res.locals.user;
+      const { accessToken, refreshToken } = makeTokens({ user_id, user_email });
 
-      await refreshTokenService.saveToken({ refreshToken, id });
+      await refreshTokenService.saveToken({ refreshToken, user_id });
 
       res.status(HttpCode.OK);
-      res.set(`accessToken,${accessToken}`);
-      res.set(`refreshToken,${refreshToken}`);
-      res.set(`userId,${id}`);
-      res.set(`userEmail,${email}`);
+      res.header("accessToken", `${accessToken}`);
+      res.header("refreshToken", `${refreshToken}`);
+      res.header("userId", `${user_id}`);
+      res.header("userEmail", `${user_email}`);
       res.send();
     } catch (error) {
       console.error(`Can't post user/login. Error:${error.message}`);
