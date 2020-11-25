@@ -11,7 +11,7 @@ const userRouter = (app, userService) => {
     res.send("it works");
   });
 
-  route.post("/", userExistanceCheck, async (req, res, next) => {
+  route.post("/", userExistanceCheck(userService), async (req, res, next) => {
     try {
       console.log(req.body);
       const { email, password } = req.body;

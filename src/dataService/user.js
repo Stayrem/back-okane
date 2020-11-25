@@ -12,10 +12,28 @@ class UserService {
         email,
         password,
       });
-      return `Created: ${newUser}`;
+      return newUser;
     } catch (err) {
       console.log(err);
       return `Can't create user. ${err}`;
+    }
+  }
+
+  async checkExistance(email) {
+    const { User } = this._models;
+    const userEmail = email.trim();
+    try {
+      const user = await User.findOne({
+        where: {
+          email: userEmail,
+        },
+      });
+      console.log(user);
+      return user;
+    } catch (error) {
+      console.error(`Can't check existence of user. Error: ${error.message}`);
+
+      return null;
     }
   }
 }
