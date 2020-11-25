@@ -29,7 +29,7 @@ const incomeRouter = (app, incomeService) => {
 
       return res.status(HttpCode.OK).json(incomes);
     } catch (err) {
-      console.log(`Can't get incomes. Error: ${err}`);
+      console.log(`Can't get income. Error: ${err}`);
       next(err);
     }
   });

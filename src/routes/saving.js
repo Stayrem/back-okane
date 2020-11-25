@@ -28,14 +28,14 @@ const savingRouter = (app, savingService) => {
 
       return res.status(HttpCode.OK).json(savings);
     } catch (err) {
-      console.log(`Can't get savings. Error: ${err}`);
+      console.log(`Can't get saving. Error: ${err}`);
       next(err);
     }
   });
 
   route.post("/", async (req, res, next) => {
     try {
-      const { name, value } = req.body;
+      const { value } = req.body;
       const user_id = req.headers["user_id"];
       const newSaving = await savingService.create({ value, user_id });
 

@@ -28,7 +28,7 @@ const spendingRouter = (app, spendingService) => {
 
       return res.status(HttpCode.OK).json(spendings);
     } catch (err) {
-      console.log(`Can't get spendings. Error: ${err}`);
+      console.log(`Can't get spending. Error: ${err}`);
       next(err);
     }
   });

@@ -28,7 +28,7 @@ const costRouter = (app, costService) => {
 
       return res.status(HttpCode.OK).json(costs);
     } catch (err) {
-      console.log(`Can't get costs. Error: ${err}`);
+      console.log(`Can't get cost. Error: ${err}`);
       next(err);
     }
   });
