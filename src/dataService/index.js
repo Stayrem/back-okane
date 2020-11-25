@@ -3,6 +3,7 @@ const IncomeService = require(`./income`);
 const CostService = require(`./cost`);
 const SpendingService = require(`./spending`);
 const SavingService = require(`./saving`);
+const SaldoService = require(`./saldo`);
 
 module.exports = {
   IncomeService,
@@ -10,4 +11,5 @@ module.exports = {
   CostService,
   SpendingService,
   SavingService,
+  SaldoService,
 };

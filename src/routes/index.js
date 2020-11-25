@@ -4,7 +4,15 @@ const income = require("./income");
 const cost = require("./cost");
 const spending = require("./spending");
 const saving = require("./saving");
-const { UserService, IncomeService, CostService, SpendingService, SavingService } = require("../dataService");
+const saldo = require("./saldo");
+const {
+  UserService,
+  IncomeService,
+  CostService,
+  SpendingService,
+  SavingService,
+  SaldoService,
+} = require("../dataService");
 const db = require("../dataBase");
 
 const app = new Router();
@@ -14,5 +22,6 @@ income(app, new IncomeService(db));
 cost(app, new CostService(db));
 spending(app, new SpendingService(db));
 saving(app, new SavingService(db));
+saldo(app, new SaldoService(db));
 
 module.exports = app;
