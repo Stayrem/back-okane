@@ -1,4 +1,4 @@
-const { createHash } = require("../utlis/functions");
+const { compareHash, createHash } = require("../utlis/functions");
 
 class UserService {
   constructor(database) {
@@ -38,6 +38,33 @@ class UserService {
       console.error(`Can't check existence of user. Error: ${error.message}`);
 
       return null;
+    }
+  }
+
+  async checkAuthData({ email, password }) {
+    const { User } = this._models;
+    try {
+      const user = await User.findOne({
+        where: {
+          email,
+        },
+      });
+      console.log(user);
+      if (!user) {
+        console.log("no user");
+        return false;
+      }
+      console.log(user.dataValues.password);
+      const passwordMatch = await compareHash(password, user.dataValues.password);
+      console.log(passwordMatch);
+      if (!passwordMatch) {
+        console.log("no match");
+        return false;
+      }
+      return user;
+    } catch (err) {
+      console.log(err);
+      return false;
     }
   }
 }

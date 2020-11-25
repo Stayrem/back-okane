@@ -12,12 +12,13 @@ const {
   SpendingService,
   SavingService,
   SaldoService,
+  RefreshTokenService,
 } = require("../dataService");
 const db = require("../dataBase");
 
 const app = new Router();
 
-user(app, new UserService(db));
+user(app, new UserService(db), new RefreshTokenService(db));
 income(app, new IncomeService(db));
 cost(app, new CostService(db));
 spending(app, new SpendingService(db));

@@ -18,4 +18,8 @@ module.exports = {
     user_password: process.env.DB_USER_PASSWORD,
     dialect: process.env.DB_DIALECT,
   },
+  jwt: {
+    access_secret: process.env.JWT_ACCESS_SECRET,
+    refresh_secret: process.env.JWT_REFRESH_SECRET,
+  },
 };

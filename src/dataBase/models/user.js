@@ -39,7 +39,7 @@ const createModel = (sequelize, DataTypes) => {
 
   return User;
 };
-const createAssociations = ({ User, Income, Cost, Saving, Spending, Saldo }) => {
+const createAssociations = ({ User, Income, Cost, Saving, Spending, Saldo, RefreshToken }) => {
   User.hasMany(Income, {
     as: `incomes`,
     foreignKey: `user_id`,
@@ -58,6 +58,10 @@ const createAssociations = ({ User, Income, Cost, Saving, Spending, Saldo }) => 
   });
   User.hasMany(Saldo, {
     as: `saldo`,
+    foreignKey: `user_id`,
+  });
+  User.hasOne(RefreshToken, {
+    as: `refreshTokens`,
     foreignKey: `user_id`,
   });
 };

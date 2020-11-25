@@ -1,4 +1,4 @@
-const { user, income, cost, saving, spending, saldo } = require("./models");
+const { user, income, cost, saving, spending, saldo, refreshToken } = require("./models");
 
 module.exports.createModels = (sequelize) => {
   const DataTypes = sequelize.Sequelize.DataTypes;
@@ -9,13 +9,15 @@ module.exports.createModels = (sequelize) => {
   const Saving = saving.createModel(sequelize, DataTypes);
   const Spending = spending.createModel(sequelize, DataTypes);
   const Saldo = saldo.createModel(sequelize, DataTypes);
+  const RefreshToken = refreshToken.createModel(sequelize, DataTypes);
 
-  user.createAssociations({ User, Income, Cost, Saving, Spending, Saldo });
+  user.createAssociations({ User, Income, Cost, Saving, Spending, Saldo, RefreshToken });
   income.createAssociations({ User, Income });
   cost.createAssociations({ User, Cost });
   saving.createAssociations({ User, Saving });
   spending.createAssociations({ User, Spending });
   saldo.createAssociations({ User, Saldo });
+  refreshToken.createAssociations({ RefreshToken, User });
 
   return {
     User,
@@ -24,5 +26,6 @@ module.exports.createModels = (sequelize) => {
     Saving,
     Spending,
     Saldo,
+    RefreshToken,
   };
 };

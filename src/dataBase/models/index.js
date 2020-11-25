@@ -4,6 +4,7 @@ const cost = require(`./cost`);
 const saving = require(`./saving`);
 const spending = require(`./spending`);
 const saldo = require(`./saldo`);
+const refreshToken = require(`./refreshToken`);
 
 module.exports = {
   user,
@@ -12,4 +13,5 @@ module.exports = {
   saving,
   spending,
   saldo,
+  refreshToken,
 };
