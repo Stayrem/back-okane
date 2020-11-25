@@ -26,7 +26,7 @@ class saldoService {
         },
         ...this._selectOptions,
       });
-      return { saldos };
+      return saldos;
     } catch (err) {
       console.log(err);
       return false;
@@ -43,7 +43,7 @@ class saldoService {
         },
         ...this._selectOptions,
       });
-      return { saldo };
+      return saldo;
     } catch (err) {
       console.log(err);
       return false;
@@ -59,7 +59,7 @@ class saldoService {
         user_id,
       });
       const newSaldo = await Saldo.findByPk(createNewSaldo.id, this._selectOptions);
-      return { newSaldo };
+      return newSaldo;
     } catch (err) {
       console.log(err);
       return false;
@@ -81,7 +81,7 @@ class saldoService {
         }
       );
       const updatedSaldo = await Saldo.findByPk(saldoId, this._selectOptions);
-      return { updatedSaldo };
+      return updatedSaldo;
     } catch (err) {
       console.log(err);
       return false;
@@ -98,7 +98,7 @@ class saldoService {
           id: saldoId,
         },
       });
-      return { saldoDeleteStatus };
+      return saldoDeleteStatus;
     } catch (err) {
       console.log(err);
       return false;

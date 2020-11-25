@@ -27,7 +27,7 @@ class IncomeService {
         ...this._selectOptions,
       });
       console.log(incomes);
-      return { incomes };
+      return incomes;
     } catch (err) {
       console.log(err);
       return false;
@@ -44,7 +44,7 @@ class IncomeService {
         },
         ...this._selectOptions,
       });
-      return { income };
+      return income;
     } catch (err) {
       console.log(err);
       return false;
@@ -62,7 +62,7 @@ class IncomeService {
         user_id,
       });
       const newIncome = await Income.findByPk(createNewIncome.id, this._selectOptions);
-      return { newIncome };
+      return newIncome;
     } catch (err) {
       console.log(err);
       return false;
@@ -87,7 +87,7 @@ class IncomeService {
         }
       );
       const updatedIncome = await Income.findByPk(incomeId, this._selectOptions);
-      return { updatedIncome };
+      return updatedIncome;
     } catch (err) {
       console.log(err);
       return false;
@@ -104,7 +104,7 @@ class IncomeService {
           id: incomeId,
         },
       });
-      return { incomeDeleteStatus };
+      return incomeDeleteStatus;
     } catch (err) {
       console.log(err);
       return false;
