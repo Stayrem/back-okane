@@ -4,6 +4,7 @@ module.exports.ExitCode = {
   success: 0,
 };
 module.exports.API_PREFIX = `/api`;
+module.exports.SaltRounds = 10;
 module.exports.HttpCode = {
   OK: 200,
   CREATED: 201,
