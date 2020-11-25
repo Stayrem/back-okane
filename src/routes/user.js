@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const { userExistanceCheck } = require("../middlewares");
 const { HttpCode } = require("../utlis/constants");
 
 const route = new Router();
@@ -11,7 +11,7 @@ const userRouter = (app, userService) => {
     res.send("it works");
   });
 
-  route.post("/", async (req, res, next) => {
+  route.post("/", userExistanceCheck, async (req, res, next) => {
     try {
       console.log(req.body);
       const { email, password } = req.body;
