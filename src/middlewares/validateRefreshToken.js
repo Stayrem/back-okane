@@ -6,12 +6,12 @@ module.exports = (service) => async (req, res, next) => {
   console.log("start middleware");
   const refreshToken = req.headers["refreshtoken"];
   if (!refreshToken) {
-    return res.sendStatus(HttpCode.BAD_REQUEST);
+    return res.status(HttpCode.BAD_REQUEST);
   }
 
   const storedRefreshToken = await service.findByToken({ refreshToken });
   if (!storedRefreshToken) {
-    return res.sendStatus(HttpCode.NOT_FOUND);
+    return res.status(HttpCode.NOT_FOUND);
   }
 
   const verifyToken = await JWT.verify(storedRefreshToken.dataValues.token, jwt.refresh_secret, (err, userData) => {
@@ -22,7 +22,7 @@ module.exports = (service) => async (req, res, next) => {
   });
   if (!verifyToken) {
     console.log("jwt error");
-    return res.status(HttpCode.FORBIDDEN).end();
+    return res.status(HttpCode.FORBIDDEN);
   }
   res.locals.refToken = refreshToken;
   next();
