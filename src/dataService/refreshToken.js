@@ -62,7 +62,7 @@ class refreshTokenService {
     }
   }
 
-  async drop({ refreshToken }) {
+  async drop(refreshToken) {
     console.log("start deleting");
     try {
       const { RefreshToken } = this._models;

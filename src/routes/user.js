@@ -34,7 +34,7 @@ const userRouter = (app, userService, refreshTokenService) => {
         res.header("refreshToken", `${refreshToken}`);
         res.header("userId", `${user_id}`);
         res.header("userEmail", `${user_email}`);
-        res.send();
+        res.end();
       } catch (error) {
         console.error(`Can't post user/login. Error:${error.message}`);
         next(error);
@@ -44,11 +44,27 @@ const userRouter = (app, userService, refreshTokenService) => {
 
   route.post(`/logout`, validateRefreshToken(refreshTokenService), async (req, res, next) => {
     try {
-      const refreshToken = res.locals.refToken;
-      console.log(`refreshToken before drop ${refreshToken}`);
-      const deletedTokenStatus = await refreshTokenService.drop({ refreshToken });
-      console.log("after delete");
+      const refreshToken = res.locals.token;
+      const deletedTokenStatus = await refreshTokenService.drop(refreshToken);
       res.status(HttpCode.NO_CONTENT);
+      res.end();
+    } catch (error) {
+      console.error(`Can't delete user/logout. Error:${error}`);
+      next(error);
+    }
+  });
+
+  route.post(`/refresh`, validateRefreshToken(refreshTokenService), async (req, res, next) => {
+    try {
+      const { user_id, user_email } = res.locals.user;
+      const existToken = res.locals.token;
+      const { accessToken, refreshToken } = makeTokens({ user_id, user_email });
+
+      await refreshTokenService.drop(existToken);
+      await refreshTokenService.save({ refreshToken, user_id });
+      res.status(HttpCode.OK);
+      res.header("accessToken", `${accessToken}`);
+      res.header("refreshToken", `${refreshToken}`);
       res.end();
     } catch (error) {
       console.error(`Can't delete user/logout. Error:${error}`);
