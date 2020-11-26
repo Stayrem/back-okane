@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userExistanceCheck, authenticateUser } = require("../middlewares");
+const { userExistanceCheck, authenticateUser, validateRefreshToken } = require("../middlewares");
 const { makeTokens } = require(`../helpers/jwt-helper`);
 const { HttpCode } = require("../utlis/constants");
 
@@ -24,7 +24,7 @@ const userRouter = (app, userService, refreshTokenService) => {
       const { id: user_id, email: user_email } = res.locals.user;
       const { accessToken, refreshToken } = makeTokens({ user_id, user_email });
 
-      await refreshTokenService.saveToken({ refreshToken, user_id });
+      await refreshTokenService.save({ refreshToken, user_id });
 
       res.status(HttpCode.OK);
       res.header("accessToken", `${accessToken}`);
@@ -34,6 +34,20 @@ const userRouter = (app, userService, refreshTokenService) => {
       res.send();
     } catch (error) {
       console.error(`Can't post user/login. Error:${error.message}`);
+      next(error);
+    }
+  });
+
+  route.post(`/logout`, validateRefreshToken(refreshTokenService), async (req, res, next) => {
+    try {
+      const refreshToken = res.locals.refToken;
+      console.log(`refreshToken before drop ${refreshToken}`);
+      const deletedTokenStatus = await refreshTokenService.drop({ refreshToken });
+      console.log("after delete");
+      res.status(HttpCode.NO_CONTENT);
+      res.end();
+    } catch (error) {
+      console.error(`Can't delete user/logout. Error:${error}`);
       next(error);
     }
   });

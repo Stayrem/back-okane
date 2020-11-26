@@ -7,7 +7,6 @@ module.exports = (service) => async (req, res, next) => {
   if (!user) {
     res.status(HttpCode.FORBIDDEN).json("User doesn't exist");
   }
-  console.log(user);
   res.locals.user = user.dataValues;
   next();
 };
