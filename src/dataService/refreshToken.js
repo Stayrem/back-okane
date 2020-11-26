@@ -72,7 +72,7 @@ class refreshTokenService {
         },
       });
       console.log(`deleted ${deleteRefreshToken}`);
-      return deleteRefreshToken;
+      return { status: deleteRefreshToken };
     } catch (err) {
       console.log(`Error: ${err}`);
       return false;

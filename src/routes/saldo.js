@@ -10,7 +10,7 @@ const saldoRouter = (app, saldoService) => {
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const saldos = await saldoService.findAll({ limit, date, user_id });
 
       return res.status(HttpCode.OK).json(saldos);
@@ -23,7 +23,7 @@ const saldoRouter = (app, saldoService) => {
   route.get("/:saldoId", validateAccessToken, async (req, res, next) => {
     try {
       const { saldoId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const saldos = await saldoService.findOne({ user_id, saldoId });
 
       return res.status(HttpCode.OK).json(saldos);
@@ -36,7 +36,7 @@ const saldoRouter = (app, saldoService) => {
   route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const newSaldo = await saldoService.create({ value, user_id });
 
       return res.status(HttpCode.CREATED).json(newSaldo);
@@ -49,7 +49,7 @@ const saldoRouter = (app, saldoService) => {
     try {
       const { saldoId } = req.params;
       const { value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const updatedSaldo = await saldoService.update({ value, saldoId, user_id });
 
       return res.status(HttpCode.OK).json(updatedSaldo);
@@ -62,7 +62,7 @@ const saldoRouter = (app, saldoService) => {
   route.delete("/:saldoId", validateAccessToken, async (req, res, next) => {
     try {
       const { saldoId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const deletedSaldo = await saldoService.delete({ saldoId, user_id });
 
       return res.status(HttpCode.OK).json(deletedSaldo);

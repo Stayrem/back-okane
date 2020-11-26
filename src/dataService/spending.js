@@ -100,7 +100,7 @@ class SpendingService {
           id: spendingId,
         },
       });
-      return spendingDeleteStatus;
+      return { status: spendingDeleteStatus };
     } catch (err) {
       console.log(err);
       return false;

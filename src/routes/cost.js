@@ -9,8 +9,8 @@ const costRouter = (app, costService) => {
 
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
+      const { user_id } = res.locals.user;
       const { limit, date } = req.query;
-      const user_id = req.headers["user_id"];
       const costs = await costService.findAll({ limit, date, user_id });
 
       return res.status(HttpCode.OK).json(costs);
@@ -22,8 +22,8 @@ const costRouter = (app, costService) => {
 
   route.get("/:costId", validateAccessToken, async (req, res, next) => {
     try {
+      const { user_id } = res.locals.user;
       const { costId } = req.params;
-      const user_id = req.headers["user_id"];
       const costs = await costService.findOne({ user_id, costId });
 
       return res.status(HttpCode.OK).json(costs);
@@ -35,8 +35,8 @@ const costRouter = (app, costService) => {
 
   route.post("/", validateAccessToken, async (req, res, next) => {
     try {
+      const { user_id } = res.locals.user;
       const { name, status, value } = req.body;
-      const user_id = req.headers["user_id"];
       const newCost = await costService.create({ name, status, value, user_id });
 
       return res.status(HttpCode.CREATED).json(newCost);
@@ -47,9 +47,9 @@ const costRouter = (app, costService) => {
   });
   route.put("/:costId", validateAccessToken, async (req, res, next) => {
     try {
+      const { user_id } = res.locals.user;
       const { costId } = req.params;
       const { name, status, value } = req.body;
-      const user_id = req.headers["user_id"];
       const updatedCost = await costService.update({ name, status, value, costId, user_id });
 
       return res.status(HttpCode.OK).json(updatedCost);
@@ -60,8 +60,8 @@ const costRouter = (app, costService) => {
   });
   route.delete("/:costId", validateAccessToken, async (req, res, next) => {
     try {
+      const { user_id } = res.locals.user;
       const { costId } = req.params;
-      const user_id = req.headers["user_id"];
       const deletedCost = await costService.delete({ costId, user_id });
 
       return res.status(HttpCode.OK).json(deletedCost);

@@ -98,7 +98,7 @@ class SavingService {
           id: savingId,
         },
       });
-      return savingDeleteStatus;
+      return { status: savingDeleteStatus };
     } catch (err) {
       console.log(err);
       return false;

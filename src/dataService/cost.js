@@ -16,6 +16,7 @@ class CostService {
     const { User } = this._models;
     try {
       const user = await User.findByPk(user_id);
+
       const costs = await user.getCosts({
         limit: limit || 100,
         where: {
@@ -26,6 +27,7 @@ class CostService {
         },
         ...this._selectOptions,
       });
+
       return costs;
     } catch (err) {
       console.log(err);
@@ -103,7 +105,7 @@ class CostService {
           id: costId,
         },
       });
-      return costDeleteStatus;
+      return { status: costDeleteStatus };
     } catch (err) {
       console.log(err);
       return false;

@@ -10,7 +10,7 @@ const spendingRouter = (app, spendingService) => {
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const spendings = await spendingService.findAll({ limit, date, user_id });
 
       return res.status(HttpCode.OK).json(spendings);
@@ -23,7 +23,7 @@ const spendingRouter = (app, spendingService) => {
   route.get("/:spendingId", validateAccessToken, async (req, res, next) => {
     try {
       const { spendingId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const spendings = await spendingService.findOne({ user_id, spendingId });
 
       return res.status(HttpCode.OK).json(spendings);
@@ -36,7 +36,7 @@ const spendingRouter = (app, spendingService) => {
   route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { name, value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const newSpending = await spendingService.create({ name, value, user_id });
 
       return res.status(HttpCode.CREATED).json(newSpending);
@@ -49,7 +49,7 @@ const spendingRouter = (app, spendingService) => {
     try {
       const { spendingId } = req.params;
       const { name, value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const updatedSpending = await spendingService.update({ name, value, spendingId, user_id });
 
       return res.status(HttpCode.OK).json(updatedSpending);
@@ -61,7 +61,7 @@ const spendingRouter = (app, spendingService) => {
   route.delete("/:spendingId", validateAccessToken, async (req, res, next) => {
     try {
       const { spendingId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const deletedSpending = await spendingService.delete({ spendingId, user_id });
 
       return res.status(HttpCode.OK).json(deletedSpending);

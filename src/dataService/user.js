@@ -11,7 +11,6 @@ class UserService {
     const { User } = this._models;
     try {
       const hash = await createHash(password);
-      console.log(hash);
       const newUser = await User.create({
         email,
         password: hash,
@@ -49,15 +48,9 @@ class UserService {
           email,
         },
       });
-      if (!user) {
-        console.log("no user");
-        return false;
-      }
+      if (!user) return null;
       const passwordMatch = await compareHash(password, user.dataValues.password);
-      if (!passwordMatch) {
-        console.log("no match");
-        return false;
-      }
+      if (!passwordMatch) return false;
       return user;
     } catch (err) {
       console.log(err);

@@ -10,7 +10,7 @@ const savingRouter = (app, savingService) => {
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const savings = await savingService.findAll({ limit, date, user_id });
 
       return res.status(HttpCode.OK).json(savings);
@@ -23,7 +23,7 @@ const savingRouter = (app, savingService) => {
   route.get("/:savingId", validateAccessToken, async (req, res, next) => {
     try {
       const { savingId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const savings = await savingService.findOne({ user_id, savingId });
 
       return res.status(HttpCode.OK).json(savings);
@@ -36,7 +36,7 @@ const savingRouter = (app, savingService) => {
   route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const newSaving = await savingService.create({ value, user_id });
 
       return res.status(HttpCode.CREATED).json(newSaving);
@@ -49,7 +49,7 @@ const savingRouter = (app, savingService) => {
     try {
       const { savingId } = req.params;
       const { value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const updatedSaving = await savingService.update({ value, savingId, user_id });
 
       return res.status(HttpCode.OK).json(updatedSaving);
@@ -62,7 +62,7 @@ const savingRouter = (app, savingService) => {
   route.delete("/:savingId", validateAccessToken, async (req, res, next) => {
     try {
       const { savingId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const deletedSaving = await savingService.delete({ savingId, user_id });
 
       return res.status(HttpCode.OK).json(deletedSaving);

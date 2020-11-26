@@ -98,7 +98,7 @@ class saldoService {
           id: saldoId,
         },
       });
-      return saldoDeleteStatus;
+      return { status: saldoDeleteStatus };
     } catch (err) {
       console.log(err);
       return false;

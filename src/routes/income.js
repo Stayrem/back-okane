@@ -10,7 +10,8 @@ const incomeRouter = (app, incomeService) => {
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
+      console.log(user_id);
       const incomes = await incomeService.findAll({ limit, date, user_id });
 
       return res.status(HttpCode.OK).json(incomes);
@@ -23,7 +24,7 @@ const incomeRouter = (app, incomeService) => {
   route.get("/:incomeId", validateAccessToken, async (req, res, next) => {
     try {
       const { incomeId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const incomes = await incomeService.findOne({ user_id, incomeId });
 
       return res.status(HttpCode.OK).json(incomes);
@@ -36,7 +37,7 @@ const incomeRouter = (app, incomeService) => {
   route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { name, status, value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const newIncome = await incomeService.create({ name, status, value, user_id });
 
       return res.status(HttpCode.CREATED).json(newIncome);
@@ -49,7 +50,7 @@ const incomeRouter = (app, incomeService) => {
     try {
       const { incomeId } = req.params;
       const { name, status, value } = req.body;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const updatedIncome = await incomeService.update({ name, status, value, incomeId, user_id });
 
       return res.status(HttpCode.OK).json(updatedIncome);
@@ -61,7 +62,7 @@ const incomeRouter = (app, incomeService) => {
   route.delete("/:incomeId", validateAccessToken, async (req, res, next) => {
     try {
       const { incomeId } = req.params;
-      const user_id = req.headers["user_id"];
+      const { user_id } = res.locals.user;
       const deletedIncome = await incomeService.delete({ incomeId, user_id });
 
       return res.status(HttpCode.OK).json(deletedIncome);
