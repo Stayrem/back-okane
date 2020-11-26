@@ -9,15 +9,15 @@ module.exports = (service) => async (req, res, next) => {
     return res.sendStatus(HttpCode.BAD_REQUEST);
   }
 
-  const storedRefreshToken = await service.find({ refreshToken });
+  const storedRefreshToken = await service.findByToken({ refreshToken });
   if (!storedRefreshToken) {
     return res.sendStatus(HttpCode.NOT_FOUND);
   }
 
-  JWT.verify(storedRefreshToken.dataValues.token, jwt.refresh_secret, async (err, userData) => {
+  await JWT.verify(storedRefreshToken.dataValues.token, jwt.refresh_secret, (err, userData) => {
     if (err) {
-      res.satatus(HttpCode.FORBIDDEN);
-      res.end();
+      console.log("jwt error");
+      return res.status(HttpCode.FORBIDDEN).end();
     }
   });
   res.locals.refToken = refreshToken;

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userExistanceCheck, authenticateUser, validateRefreshToken } = require("../middlewares");
+const { userExistanceCheck, authenticateUser, validateRefreshToken, tokenExistanceCheck } = require("../middlewares");
 const { makeTokens } = require(`../helpers/jwt-helper`);
 const { HttpCode } = require("../utlis/constants");
 
@@ -19,24 +19,28 @@ const userRouter = (app, userService, refreshTokenService) => {
     }
   });
 
-  route.post("/login", authenticateUser(userService), async (req, res, next) => {
-    try {
-      const { id: user_id, email: user_email } = res.locals.user;
-      const { accessToken, refreshToken } = makeTokens({ user_id, user_email });
+  route.post(
+    "/login",
+    [authenticateUser(userService), tokenExistanceCheck(refreshTokenService)],
+    async (req, res, next) => {
+      try {
+        const { id: user_id, email: user_email } = res.locals.user;
+        const { accessToken, refreshToken } = makeTokens({ user_id, user_email });
 
-      await refreshTokenService.save({ refreshToken, user_id });
+        await refreshTokenService.save({ refreshToken, user_id });
 
-      res.status(HttpCode.OK);
-      res.header("accessToken", `${accessToken}`);
-      res.header("refreshToken", `${refreshToken}`);
-      res.header("userId", `${user_id}`);
-      res.header("userEmail", `${user_email}`);
-      res.send();
-    } catch (error) {
-      console.error(`Can't post user/login. Error:${error.message}`);
-      next(error);
+        res.status(HttpCode.OK);
+        res.header("accessToken", `${accessToken}`);
+        res.header("refreshToken", `${refreshToken}`);
+        res.header("userId", `${user_id}`);
+        res.header("userEmail", `${user_email}`);
+        res.send();
+      } catch (error) {
+        console.error(`Can't post user/login. Error:${error.message}`);
+        next(error);
+      }
     }
-  });
+  );
 
   route.post(`/logout`, validateRefreshToken(refreshTokenService), async (req, res, next) => {
     try {

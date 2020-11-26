@@ -22,19 +22,40 @@ class refreshTokenService {
     }
   }
 
-  async find({ refreshToken }) {
+  async findByToken({ refreshToken }) {
     try {
-      console.log("find");
-      console.log(refreshToken);
       const { RefreshToken } = this._models;
       const storedRefreshToken = await RefreshToken.findOne({
         where: {
           token: refreshToken,
         },
       });
-      console.log("found");
-      console.log(storedRefreshToken);
       return storedRefreshToken;
+    } catch (err) {
+      console.log(`Error: ${err}`);
+      return false;
+    }
+  }
+
+  async findByUser({ email }) {
+    console.log(email);
+    try {
+      const { RefreshToken, User } = this._models;
+      const userId = await User.findOne({
+        where: {
+          email,
+        },
+        attributes: ["id"],
+      });
+      if (userId) {
+        const storedRefreshToken = await RefreshToken.findOne({
+          where: {
+            user_id: userId.dataValues.id,
+          },
+        });
+        return storedRefreshToken;
+      }
+      return null;
     } catch (err) {
       console.log(`Error: ${err}`);
       return false;
