@@ -14,12 +14,16 @@ module.exports = (service) => async (req, res, next) => {
     return res.sendStatus(HttpCode.NOT_FOUND);
   }
 
-  await JWT.verify(storedRefreshToken.dataValues.token, jwt.refresh_secret, (err, userData) => {
+  const verifyToken = await JWT.verify(storedRefreshToken.dataValues.token, jwt.refresh_secret, (err, userData) => {
     if (err) {
-      console.log("jwt error");
-      return res.status(HttpCode.FORBIDDEN).end();
+      return false;
     }
+    return true;
   });
+  if (!verifyToken) {
+    console.log("jwt error");
+    return res.status(HttpCode.FORBIDDEN).end();
+  }
   res.locals.refToken = refreshToken;
   next();
 };

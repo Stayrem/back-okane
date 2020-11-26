@@ -63,6 +63,7 @@ class refreshTokenService {
   }
 
   async drop({ refreshToken }) {
+    console.log("start deleting");
     try {
       const { RefreshToken } = this._models;
       const deleteRefreshToken = await RefreshToken.destroy({
