@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const { validateAccessToken } = require("../middlewares");
 const { HttpCode } = require("../utlis/constants");
 
 const route = new Router();
@@ -7,7 +7,7 @@ const route = new Router();
 const costRouter = (app, costService) => {
   app.use("/costs", route);
 
-  route.get("/", async (req, res, next) => {
+  route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
       const user_id = req.headers["user_id"];
@@ -20,7 +20,7 @@ const costRouter = (app, costService) => {
     }
   });
 
-  route.get("/:costId", async (req, res, next) => {
+  route.get("/:costId", validateAccessToken, async (req, res, next) => {
     try {
       const { costId } = req.params;
       const user_id = req.headers["user_id"];
@@ -33,7 +33,7 @@ const costRouter = (app, costService) => {
     }
   });
 
-  route.post("/", async (req, res, next) => {
+  route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
@@ -45,7 +45,7 @@ const costRouter = (app, costService) => {
       next(err);
     }
   });
-  route.put("/:costId", async (req, res, next) => {
+  route.put("/:costId", validateAccessToken, async (req, res, next) => {
     try {
       const { costId } = req.params;
       const { name, status, value } = req.body;
@@ -58,7 +58,7 @@ const costRouter = (app, costService) => {
       next(err);
     }
   });
-  route.delete("/:costId", async (req, res, next) => {
+  route.delete("/:costId", validateAccessToken, async (req, res, next) => {
     try {
       const { costId } = req.params;
       const user_id = req.headers["user_id"];

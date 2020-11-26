@@ -2,26 +2,26 @@ const { HttpCode } = require("../utlis/constants");
 const JWT = require("jsonwebtoken");
 const { jwt } = require("../config");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const authorization = req.headers[`authorization`];
   if (!authorization) {
-    return res.status(HttpCode.UNAUTHORIZED);
+    return res.status(HttpCode.UNAUTHORIZED).end();
   }
 
   const [, token] = authorization.split(` `);
 
   if (!token) {
-    return res.status(HttpCode.UNAUTHORIZED);
+    return res.status(HttpCode.UNAUTHORIZED).end();
   }
 
-  const verifyToken = await jwt.verify(token, jwt_access_secret, (err, userData) => {
+  const verifyToken = await JWT.verify(token, jwt.access_secret, (err, userData) => {
     if (err) {
       return false;
     }
     return userData;
   });
   if (!verifyToken) {
-    return res.status(HttpCode.FORBIDDEN);
+    return res.status(HttpCode.FORBIDDEN).end();
   }
 
   res.locals.user = verifyToken; // user data

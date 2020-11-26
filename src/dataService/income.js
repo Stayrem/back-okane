@@ -16,6 +16,7 @@ class IncomeService {
     const { User } = this._models;
     try {
       const user = await User.findByPk(user_id);
+      //TODO: нет необходимости искать что-то, если пользователя нет
       const incomes = await user.getIncomes({
         limit: limit || 100,
         where: {

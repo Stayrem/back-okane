@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const { validateAccessToken } = require("../middlewares");
 const { HttpCode } = require("../utlis/constants");
 
 const route = new Router();
@@ -7,9 +7,8 @@ const route = new Router();
 const incomeRouter = (app, incomeService) => {
   app.use("/incomes", route);
 
-  route.get("/", async (req, res, next) => {
+  route.get("/", validateAccessToken, async (req, res, next) => {
     try {
-      console.log(1);
       const { limit, date } = req.query;
       const user_id = req.headers["user_id"];
       const incomes = await incomeService.findAll({ limit, date, user_id });
@@ -21,7 +20,7 @@ const incomeRouter = (app, incomeService) => {
     }
   });
 
-  route.get("/:incomeId", async (req, res, next) => {
+  route.get("/:incomeId", validateAccessToken, async (req, res, next) => {
     try {
       const { incomeId } = req.params;
       const user_id = req.headers["user_id"];
@@ -34,7 +33,7 @@ const incomeRouter = (app, incomeService) => {
     }
   });
 
-  route.post("/", async (req, res, next) => {
+  route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { name, status, value } = req.body;
       const user_id = req.headers["user_id"];
@@ -46,7 +45,7 @@ const incomeRouter = (app, incomeService) => {
       next(err);
     }
   });
-  route.put("/:incomeId", async (req, res, next) => {
+  route.put("/:incomeId", validateAccessToken, async (req, res, next) => {
     try {
       const { incomeId } = req.params;
       const { name, status, value } = req.body;
@@ -59,7 +58,7 @@ const incomeRouter = (app, incomeService) => {
       next(err);
     }
   });
-  route.delete("/:incomeId", async (req, res, next) => {
+  route.delete("/:incomeId", validateAccessToken, async (req, res, next) => {
     try {
       const { incomeId } = req.params;
       const user_id = req.headers["user_id"];

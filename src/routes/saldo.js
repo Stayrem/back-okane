@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const { validateAccessToken } = require("../middlewares");
 const { HttpCode } = require("../utlis/constants");
 
 const route = new Router();
@@ -7,7 +7,7 @@ const route = new Router();
 const saldoRouter = (app, saldoService) => {
   app.use("/saldos", route);
 
-  route.get("/", async (req, res, next) => {
+  route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
       const user_id = req.headers["user_id"];
@@ -20,7 +20,7 @@ const saldoRouter = (app, saldoService) => {
     }
   });
 
-  route.get("/:saldoId", async (req, res, next) => {
+  route.get("/:saldoId", validateAccessToken, async (req, res, next) => {
     try {
       const { saldoId } = req.params;
       const user_id = req.headers["user_id"];
@@ -33,7 +33,7 @@ const saldoRouter = (app, saldoService) => {
     }
   });
 
-  route.post("/", async (req, res, next) => {
+  route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { value } = req.body;
       const user_id = req.headers["user_id"];
@@ -45,7 +45,7 @@ const saldoRouter = (app, saldoService) => {
       next(err);
     }
   });
-  route.put("/:saldoId", async (req, res, next) => {
+  route.put("/:saldoId", validateAccessToken, async (req, res, next) => {
     try {
       const { saldoId } = req.params;
       const { value } = req.body;
@@ -59,7 +59,7 @@ const saldoRouter = (app, saldoService) => {
     }
   });
 
-  route.delete("/:saldoId", async (req, res, next) => {
+  route.delete("/:saldoId", validateAccessToken, async (req, res, next) => {
     try {
       const { saldoId } = req.params;
       const user_id = req.headers["user_id"];

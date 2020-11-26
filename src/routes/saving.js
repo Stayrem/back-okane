@@ -1,5 +1,5 @@
 const { Router } = require("express");
-
+const { validateAccessToken } = require("../middlewares");
 const { HttpCode } = require("../utlis/constants");
 
 const route = new Router();
@@ -7,7 +7,7 @@ const route = new Router();
 const savingRouter = (app, savingService) => {
   app.use("/savings", route);
 
-  route.get("/", async (req, res, next) => {
+  route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { limit, date } = req.query;
       const user_id = req.headers["user_id"];
@@ -20,7 +20,7 @@ const savingRouter = (app, savingService) => {
     }
   });
 
-  route.get("/:savingId", async (req, res, next) => {
+  route.get("/:savingId", validateAccessToken, async (req, res, next) => {
     try {
       const { savingId } = req.params;
       const user_id = req.headers["user_id"];
@@ -33,7 +33,7 @@ const savingRouter = (app, savingService) => {
     }
   });
 
-  route.post("/", async (req, res, next) => {
+  route.post("/", validateAccessToken, async (req, res, next) => {
     try {
       const { value } = req.body;
       const user_id = req.headers["user_id"];
@@ -45,7 +45,7 @@ const savingRouter = (app, savingService) => {
       next(err);
     }
   });
-  route.put("/:savingId", async (req, res, next) => {
+  route.put("/:savingId", validateAccessToken, async (req, res, next) => {
     try {
       const { savingId } = req.params;
       const { value } = req.body;
@@ -59,7 +59,7 @@ const savingRouter = (app, savingService) => {
     }
   });
 
-  route.delete("/:savingId", async (req, res, next) => {
+  route.delete("/:savingId", validateAccessToken, async (req, res, next) => {
     try {
       const { savingId } = req.params;
       const user_id = req.headers["user_id"];
