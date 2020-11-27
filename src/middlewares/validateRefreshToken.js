@@ -3,7 +3,6 @@ const JWT = require("jsonwebtoken");
 const { jwt } = require("../config");
 
 module.exports = (service) => async (req, res, next) => {
-  console.log("start middleware");
   const refreshToken = req.headers["refreshtoken"];
   if (!refreshToken) {
     return res.status(HttpCode.BAD_REQUEST).end();
@@ -21,7 +20,6 @@ module.exports = (service) => async (req, res, next) => {
     return userData;
   });
   if (!verifyToken) {
-    console.log("jwt error");
     return res.status(HttpCode.FORBIDDEN).end();
   }
   res.locals.token = refreshToken;

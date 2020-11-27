@@ -55,10 +55,11 @@ class SpendingService {
             ...this._selectOptions,
           });
       }
+
       return spendings;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -72,10 +73,11 @@ class SpendingService {
         },
         ...this._selectOptions,
       });
+
       return spending;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -89,10 +91,11 @@ class SpendingService {
         user_id,
       });
       const newSpending = await Spending.findByPk(createNewSpending.id, this._selectOptions);
+
       return newSpending;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -112,10 +115,11 @@ class SpendingService {
         }
       );
       const updatedSpending = await Spending.findByPk(spendingId, this._selectOptions);
+
       return updatedSpending;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -129,10 +133,11 @@ class SpendingService {
           id: spendingId,
         },
       });
+
       return { status: spendingDeleteStatus };
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 }

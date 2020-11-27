@@ -14,7 +14,7 @@ const userRouter = (app, userService, refreshTokenService) => {
       const newUser = await userService.create({ email, password });
       return res.status(HttpCode.CREATED).json(newUser);
     } catch (err) {
-      console.log(`Can't post. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -32,12 +32,10 @@ const userRouter = (app, userService, refreshTokenService) => {
         res.status(HttpCode.OK);
         res.header("accessToken", `${accessToken}`);
         res.header("refreshToken", `${refreshToken}`);
-        res.header("userId", `${user_id}`);
-        res.header("userEmail", `${user_email}`);
         res.end();
-      } catch (error) {
-        console.error(`Can't post user/login. Error:${error.message}`);
-        next(error);
+      } catch (err) {
+        console.error(err);
+        next(err);
       }
     }
   );
@@ -48,9 +46,9 @@ const userRouter = (app, userService, refreshTokenService) => {
       const deletedTokenStatus = await refreshTokenService.drop(refreshToken);
       res.status(HttpCode.NO_CONTENT);
       res.end();
-    } catch (error) {
-      console.error(`Can't delete user/logout. Error:${error}`);
-      next(error);
+    } catch (err) {
+      console.error(err);
+      next(err);
     }
   });
 
@@ -66,9 +64,9 @@ const userRouter = (app, userService, refreshTokenService) => {
       res.header("accessToken", `${accessToken}`);
       res.header("refreshToken", `${refreshToken}`);
       res.end();
-    } catch (error) {
-      console.error(`Can't delete user/logout. Error:${error}`);
-      next(error);
+    } catch (err) {
+      console.error(err);
+      next(err);
     }
   });
 };

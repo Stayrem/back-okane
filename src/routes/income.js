@@ -15,7 +15,7 @@ const incomeRouter = (app, incomeService) => {
 
       return res.status(HttpCode.OK).json(incomes);
     } catch (err) {
-      console.log(`Can't get incomes. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -28,7 +28,7 @@ const incomeRouter = (app, incomeService) => {
 
       return res.status(HttpCode.OK).json(incomes);
     } catch (err) {
-      console.log(`Can't get income. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -41,7 +41,7 @@ const incomeRouter = (app, incomeService) => {
 
       return res.status(HttpCode.CREATED).json(newIncome);
     } catch (err) {
-      console.log(`Can't post incomes. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -54,7 +54,7 @@ const incomeRouter = (app, incomeService) => {
 
       return res.status(HttpCode.OK).json(updatedIncome);
     } catch (err) {
-      console.log(`Can't update income. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -66,7 +66,7 @@ const incomeRouter = (app, incomeService) => {
 
       return res.status(HttpCode.OK).json(deletedIncome);
     } catch (err) {
-      console.log(`Can't delete income. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });

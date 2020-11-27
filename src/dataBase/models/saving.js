@@ -3,7 +3,7 @@ const createModel = (sequelize, DataTypes) => {
   Saving.init(
     {
       value: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
       date: {

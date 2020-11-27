@@ -3,7 +3,7 @@ const createModel = (sequelize, DataTypes) => {
   RefreshToken.init(
     {
       token: {
-        type: DataTypes.STRING(350),
+        type: DataTypes.STRING(1000),
         allowNull: false,
         unique: true,
       },

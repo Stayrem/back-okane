@@ -59,7 +59,7 @@ class CostService {
       return costs;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -73,10 +73,11 @@ class CostService {
         },
         ...this._selectOptions,
       });
+
       return cost;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -91,10 +92,11 @@ class CostService {
         user_id,
       });
       const newCost = await Cost.findByPk(createNewCost.id, this._selectOptions);
+
       return newCost;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -116,10 +118,11 @@ class CostService {
         }
       );
       const updatedCost = await Cost.findByPk(costId, this._selectOptions);
+
       return updatedCost;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -133,10 +136,11 @@ class CostService {
           id: costId,
         },
       });
+
       return { status: costDeleteStatus };
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 }

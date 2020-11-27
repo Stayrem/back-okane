@@ -55,10 +55,11 @@ class SavingService {
             ...this._selectOptions,
           });
       }
+
       return savings;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -72,10 +73,11 @@ class SavingService {
         },
         ...this._selectOptions,
       });
+
       return saving;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -88,10 +90,11 @@ class SavingService {
         user_id,
       });
       const newSaving = await Saving.findByPk(createNewSaving.id, this._selectOptions);
+
       return newSaving;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -110,10 +113,11 @@ class SavingService {
         }
       );
       const updatedSaving = await Saving.findByPk(savingId, this._selectOptions);
+
       return updatedSaving;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -127,10 +131,11 @@ class SavingService {
           id: savingId,
         },
       });
+
       return { status: savingDeleteStatus };
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 }

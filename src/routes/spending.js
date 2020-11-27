@@ -15,7 +15,7 @@ const spendingRouter = (app, spendingService) => {
 
       return res.status(HttpCode.OK).json(spendings);
     } catch (err) {
-      console.log(`Can't get spendings. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -28,7 +28,7 @@ const spendingRouter = (app, spendingService) => {
 
       return res.status(HttpCode.OK).json(spendings);
     } catch (err) {
-      console.log(`Can't get spending. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -41,7 +41,7 @@ const spendingRouter = (app, spendingService) => {
 
       return res.status(HttpCode.CREATED).json(newSpending);
     } catch (err) {
-      console.log(`Can't post spendings. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -54,7 +54,7 @@ const spendingRouter = (app, spendingService) => {
 
       return res.status(HttpCode.OK).json(updatedSpending);
     } catch (err) {
-      console.log(`Can't update spending. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -66,7 +66,7 @@ const spendingRouter = (app, spendingService) => {
 
       return res.status(HttpCode.OK).json(deletedSpending);
     } catch (err) {
-      console.log(`Can't delete spending. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });

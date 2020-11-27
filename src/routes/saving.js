@@ -15,7 +15,7 @@ const savingRouter = (app, savingService) => {
 
       return res.status(HttpCode.OK).json(savings);
     } catch (err) {
-      console.log(`Can't get savings. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -28,7 +28,7 @@ const savingRouter = (app, savingService) => {
 
       return res.status(HttpCode.OK).json(savings);
     } catch (err) {
-      console.log(`Can't get saving. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -41,7 +41,7 @@ const savingRouter = (app, savingService) => {
 
       return res.status(HttpCode.CREATED).json(newSaving);
     } catch (err) {
-      console.log(`Can't post savings. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -54,7 +54,7 @@ const savingRouter = (app, savingService) => {
 
       return res.status(HttpCode.OK).json(updatedSaving);
     } catch (err) {
-      console.log(`Can't update saving. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -67,7 +67,7 @@ const savingRouter = (app, savingService) => {
 
       return res.status(HttpCode.OK).json(deletedSaving);
     } catch (err) {
-      console.log(`Can't delete saving. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });

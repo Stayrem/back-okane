@@ -15,10 +15,11 @@ class refreshTokenService {
         token: refreshToken,
         user_id,
       });
-      return true;
+
+      return newRefreshToken;
     } catch (err) {
-      console.log(`Error: ${err}`);
-      return false;
+      console.log(err);
+      return null;
     }
   }
 
@@ -30,15 +31,15 @@ class refreshTokenService {
           token: refreshToken,
         },
       });
+
       return storedRefreshToken;
     } catch (err) {
-      console.log(`Error: ${err}`);
-      return false;
+      console.log(err);
+      return null;
     }
   }
 
   async findByUser({ email }) {
-    console.log(email);
     try {
       const { RefreshToken, User } = this._models;
       const userId = await User.findOne({
@@ -55,15 +56,15 @@ class refreshTokenService {
         });
         return storedRefreshToken;
       }
+
       return null;
     } catch (err) {
-      console.log(`Error: ${err}`);
-      return false;
+      console.log(err);
+      return null;
     }
   }
 
   async drop(refreshToken) {
-    console.log("start deleting");
     try {
       const { RefreshToken } = this._models;
       const deleteRefreshToken = await RefreshToken.destroy({
@@ -71,11 +72,11 @@ class refreshTokenService {
           token: refreshToken,
         },
       });
-      console.log(`deleted ${deleteRefreshToken}`);
+
       return { status: deleteRefreshToken };
     } catch (err) {
-      console.log(`Error: ${err}`);
-      return false;
+      console.log(err);
+      return null;
     }
   }
 }

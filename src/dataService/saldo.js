@@ -55,10 +55,11 @@ class saldoService {
             ...this._selectOptions,
           });
       }
+
       return saldos;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -72,10 +73,11 @@ class saldoService {
         },
         ...this._selectOptions,
       });
+
       return saldo;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -88,10 +90,11 @@ class saldoService {
         user_id,
       });
       const newSaldo = await Saldo.findByPk(createNewSaldo.id, this._selectOptions);
+
       return newSaldo;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -110,10 +113,11 @@ class saldoService {
         }
       );
       const updatedSaldo = await Saldo.findByPk(saldoId, this._selectOptions);
+
       return updatedSaldo;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -127,10 +131,11 @@ class saldoService {
           id: saldoId,
         },
       });
+
       return { status: saldoDeleteStatus };
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 }

@@ -15,7 +15,7 @@ const costRouter = (app, costService) => {
 
       return res.status(HttpCode.OK).json(costs);
     } catch (err) {
-      console.log(`Can't get costs. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -28,7 +28,7 @@ const costRouter = (app, costService) => {
 
       return res.status(HttpCode.OK).json(costs);
     } catch (err) {
-      console.log(`Can't get cost. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -41,7 +41,7 @@ const costRouter = (app, costService) => {
 
       return res.status(HttpCode.CREATED).json(newCost);
     } catch (err) {
-      console.log(`Can't post costs. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -54,7 +54,7 @@ const costRouter = (app, costService) => {
 
       return res.status(HttpCode.OK).json(updatedCost);
     } catch (err) {
-      console.log(`Can't update cost. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -66,7 +66,7 @@ const costRouter = (app, costService) => {
 
       return res.status(HttpCode.OK).json(deletedCost);
     } catch (err) {
-      console.log(`Can't delete cost. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });

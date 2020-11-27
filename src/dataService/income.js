@@ -17,7 +17,7 @@ class IncomeService {
     try {
       const user = await User.findByPk(user_id);
       let incomes;
-
+      //TODO: Need to call sequelize guru here
       switch (typeof date) {
         case "string":
           incomes = await user.getIncomes({
@@ -54,7 +54,7 @@ class IncomeService {
           });
       }
 
-      // Need to check theese
+      //attempts
 
       /*  incomes = await user.getIncomes({
         limit: limit || 100,
@@ -90,10 +90,11 @@ class IncomeService {
         },
         ...this._selectOptions,
       }); */
+
       return incomes;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -107,10 +108,11 @@ class IncomeService {
         },
         ...this._selectOptions,
       });
+
       return income;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -125,10 +127,11 @@ class IncomeService {
         user_id,
       });
       const newIncome = await Income.findByPk(createNewIncome.id, this._selectOptions);
+
       return newIncome;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -150,10 +153,11 @@ class IncomeService {
         }
       );
       const updatedIncome = await Income.findByPk(incomeId, this._selectOptions);
+
       return updatedIncome;
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 
@@ -167,10 +171,11 @@ class IncomeService {
           id: incomeId,
         },
       });
+
       return { status: incomeDeleteStatus };
     } catch (err) {
       console.log(err);
-      return false;
+      return null;
     }
   }
 }

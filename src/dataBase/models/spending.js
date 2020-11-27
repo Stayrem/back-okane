@@ -7,7 +7,7 @@ const createModel = (sequelize, DataTypes) => {
         allowNull: false,
       },
       value: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.BIGINT,
         allowNull: false,
       },
       date: {

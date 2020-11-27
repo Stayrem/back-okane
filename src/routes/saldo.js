@@ -15,7 +15,7 @@ const saldoRouter = (app, saldoService) => {
 
       return res.status(HttpCode.OK).json(saldos);
     } catch (err) {
-      console.log(`Can't get saldos. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -28,7 +28,7 @@ const saldoRouter = (app, saldoService) => {
 
       return res.status(HttpCode.OK).json(saldos);
     } catch (err) {
-      console.log(`Can't get saldo. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -41,7 +41,7 @@ const saldoRouter = (app, saldoService) => {
 
       return res.status(HttpCode.CREATED).json(newSaldo);
     } catch (err) {
-      console.log(`Can't post saldos. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -54,7 +54,7 @@ const saldoRouter = (app, saldoService) => {
 
       return res.status(HttpCode.OK).json(updatedSaldo);
     } catch (err) {
-      console.log(`Can't update saldo. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
@@ -67,7 +67,7 @@ const saldoRouter = (app, saldoService) => {
 
       return res.status(HttpCode.OK).json(deletedSaldo);
     } catch (err) {
-      console.log(`Can't delete saldo. Error: ${err}`);
+      console.log(err);
       next(err);
     }
   });
