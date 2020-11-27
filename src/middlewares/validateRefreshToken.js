@@ -8,9 +8,14 @@ module.exports = (service) => async (req, res, next) => {
     return res.status(HttpCode.BAD_REQUEST).end();
   }
 
-  const storedRefreshToken = await service.findByToken({ refreshToken });
-  if (!storedRefreshToken) {
-    return res.status(HttpCode.NOT_FOUND).end();
+  try {
+    const storedRefreshToken = await service.findByToken({ refreshToken });
+    if (!storedRefreshToken) {
+      return res.status(HttpCode.NOT_FOUND).end();
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 
   const verifyToken = await JWT.verify(storedRefreshToken.dataValues.token, jwt.refresh_secret, (err, userData) => {
@@ -19,9 +24,11 @@ module.exports = (service) => async (req, res, next) => {
     }
     return userData;
   });
+
   if (!verifyToken) {
     return res.status(HttpCode.FORBIDDEN).end();
   }
+
   res.locals.token = refreshToken;
   res.locals.user = verifyToken;
   next();

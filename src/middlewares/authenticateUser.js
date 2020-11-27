@@ -2,11 +2,17 @@ const { HttpCode } = require(`../utlis/constants`);
 
 module.exports = (service) => async (req, res, next) => {
   const { email, password } = req.body;
-  const user = await service.checkAuthData({ email, password });
+  try {
+    const user = await service.checkAuthData({ email, password });
 
-  if (!user) {
-    res.status(HttpCode.FORBIDDEN).json("User doesn't exist");
+    if (!user) {
+      return res.status(HttpCode.FORBIDDEN).end();
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
+
   res.locals.user = user.dataValues;
   next();
 };

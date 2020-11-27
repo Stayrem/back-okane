@@ -20,6 +20,7 @@ module.exports = async (req, res, next) => {
     }
     return userData;
   });
+
   if (!verifyToken) {
     return res.status(HttpCode.FORBIDDEN).end();
   }

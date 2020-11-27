@@ -6,10 +6,10 @@ module.exports = (service) => async (req, res, next) => {
     const user = await service.checkExistance(email);
 
     if (user) {
-      return res.status(HttpCode.CONFLICT).send("user already exists");
+      return res.status(HttpCode.CONFLICT).end();
     }
   } catch (err) {
-    console.error(`Error: ${err.message}.`);
+    console.error(err);
     next(err);
   }
 

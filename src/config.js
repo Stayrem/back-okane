@@ -21,5 +21,7 @@ module.exports = {
   jwt: {
     access_secret: process.env.JWT_ACCESS_SECRET,
     refresh_secret: process.env.JWT_REFRESH_SECRET,
+    access_duration: process.env.JWT_ACCESS_DURATION,
+    refresh_duration: process.env.JWT_REFRESH_DURATION,
   },
 };
