@@ -23,7 +23,7 @@ class saldoService {
       switch (typeof date) {
         case "string":
           saldos = await user.getSaldo({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date,
               user_id,
@@ -33,7 +33,7 @@ class saldoService {
           break;
         case "object":
           saldos = await user.getSaldo({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date: { [sequelize.Sequelize.Op.between]: [date[0], date[1]] },
               user_id,
@@ -43,7 +43,7 @@ class saldoService {
           break;
         default:
           saldos = await user.getSaldo({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date: sequelize.where(
                 sequelize.fn("date", sequelize.col("date")),

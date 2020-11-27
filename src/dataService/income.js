@@ -21,7 +21,7 @@ class IncomeService {
       switch (typeof date) {
         case "string":
           incomes = await user.getIncomes({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date,
               user_id,
@@ -34,7 +34,7 @@ class IncomeService {
           break;
         case "object":
           incomes = await user.getIncomes({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date: { [sequelize.Sequelize.Op.between]: [date[0], date[1]] },
               user_id,
@@ -47,7 +47,7 @@ class IncomeService {
           break;
         default:
           incomes = await user.getIncomes({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date: sequelize.where(
                 sequelize.fn("date", sequelize.col("date")),

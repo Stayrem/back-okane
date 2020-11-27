@@ -23,7 +23,7 @@ class CostService {
       switch (typeof date) {
         case "string":
           costs = await user.getCosts({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date,
               user_id,
@@ -36,7 +36,7 @@ class CostService {
           break;
         case "object":
           costs = await user.getCosts({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date: { [sequelize.Sequelize.Op.between]: [date[0], date[1]] },
               user_id,
@@ -49,7 +49,7 @@ class CostService {
           break;
         default:
           costs = await user.getCosts({
-            limit: limit || 100,
+            limit: limit || 100000,
             where: {
               date: sequelize.where(
                 sequelize.fn("date", sequelize.col("date")),

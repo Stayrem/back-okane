@@ -12,7 +12,12 @@ const userRouter = (app, userService, refreshTokenService) => {
     try {
       const { email, password } = req.body;
       const newUser = await userService.create({ email, password });
-      return res.status(HttpCode.CREATED).json(newUser);
+      const newUserData = {
+        id: newUser.dataValues.id,
+        sign_up_date: newUser.dataValues.sign_up_date,
+        email: newUser.dataValues.email,
+      };
+      return res.status(HttpCode.CREATED).json(newUserData);
     } catch (err) {
       console.log(err);
       next(err);

@@ -7,11 +7,11 @@ const createModel = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
-      exp_date: {
+      /*       exp_date: {
         field: `exp_date`,
         type: DataTypes.DATE,
         defaultValue: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60), // 60d
-      },
+      }, */
     },
     {
       sequelize,
