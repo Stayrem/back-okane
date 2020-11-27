@@ -8,10 +8,10 @@ module.exports = (service) => async (req, res, next) => {
     if (user) {
       return res.status(HttpCode.CONFLICT).end();
     }
+
+    next();
   } catch (err) {
     console.error(err);
     next(err);
   }
-
-  next();
 };

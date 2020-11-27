@@ -8,9 +8,10 @@ module.exports = (service) => async (req, res, next) => {
     if (storedRefreshToken) {
       return res.status(HttpCode.OK).end();
     }
+
+    next();
   } catch (err) {
     console.error(err);
     next(err);
   }
-  next();
 };

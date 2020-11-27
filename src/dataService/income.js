@@ -10,7 +10,7 @@ class IncomeService {
       order: [[`date`, `DESC`]],
     };
   }
-  async findAll({ limit, date, user_id }) {
+  async findAll({ limit, date, user_id, status }) {
     const { sequelize } = this._database;
     const { User } = this._models;
     if (date && date.split(" ").length > 1) date = date.split(" ");
@@ -25,6 +25,9 @@ class IncomeService {
             where: {
               date,
               user_id,
+              status: status || {
+                [sequelize.Sequelize.Op.not]: null,
+              },
             },
             ...this._selectOptions,
           });
@@ -35,6 +38,9 @@ class IncomeService {
             where: {
               date: { [sequelize.Sequelize.Op.between]: [date[0], date[1]] },
               user_id,
+              status: status || {
+                [sequelize.Sequelize.Op.not]: null,
+              },
             },
             ...this._selectOptions,
           });
@@ -49,6 +55,9 @@ class IncomeService {
                 moment(new Date()).format("YYYY-MM-DD")
               ),
               user_id,
+              status: status || {
+                [sequelize.Sequelize.Op.not]: null,
+              },
             },
             ...this._selectOptions,
           });

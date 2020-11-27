@@ -8,11 +8,12 @@ module.exports = (service) => async (req, res, next) => {
     if (!user) {
       return res.status(HttpCode.FORBIDDEN).end();
     }
+
+    res.locals.user = user.dataValues;
+
+    next();
   } catch (err) {
     console.log(err);
     next(err);
   }
-
-  res.locals.user = user.dataValues;
-  next();
 };

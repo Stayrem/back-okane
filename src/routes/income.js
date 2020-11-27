@@ -9,9 +9,9 @@ const incomeRouter = (app, incomeService) => {
 
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
-      let { limit, date } = req.query;
+      let { limit, date, status } = req.query;
       const { user_id } = res.locals.user;
-      const incomes = await incomeService.findAll({ limit, date, user_id });
+      const incomes = await incomeService.findAll({ limit, date, user_id, status });
 
       return res.status(HttpCode.OK).json(incomes);
     } catch (err) {

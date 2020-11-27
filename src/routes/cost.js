@@ -10,8 +10,8 @@ const costRouter = (app, costService) => {
   route.get("/", validateAccessToken, async (req, res, next) => {
     try {
       const { user_id } = res.locals.user;
-      const { limit, date } = req.query;
-      const costs = await costService.findAll({ limit, date, user_id });
+      const { limit, date, status } = req.query;
+      const costs = await costService.findAll({ limit, date, user_id, status });
 
       return res.status(HttpCode.OK).json(costs);
     } catch (err) {
