@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 const createModel = (sequelize, DataTypes) => {
   class User extends sequelize.Sequelize.Model {}
   User.init(
@@ -24,9 +22,6 @@ const createModel = (sequelize, DataTypes) => {
         field: `sign_up_date`,
         type: DataTypes.DATEONLY,
         defaultValue: sequelize.Sequelize.NOW,
-        get: function () {
-          return moment.utc(this.getDataValue("date")).format("YYYY-MM-DD");
-        },
       },
     },
     {

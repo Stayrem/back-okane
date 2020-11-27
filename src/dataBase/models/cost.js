@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 const createModel = (sequelize, DataTypes) => {
   class Cost extends sequelize.Sequelize.Model {}
   Cost.init(
@@ -21,9 +19,6 @@ const createModel = (sequelize, DataTypes) => {
         field: `date`,
         type: DataTypes.DATEONLY,
         defaultValue: sequelize.Sequelize.NOW,
-        get: function () {
-          return moment.utc(this.getDataValue("date")).format("YYYY-MM");
-        },
       },
     },
     {

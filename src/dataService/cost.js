@@ -14,19 +14,47 @@ class CostService {
   async findAll({ limit, date, user_id }) {
     const { sequelize } = this._database;
     const { User } = this._models;
+    if (date && date.split(" ").length > 1) date = date.split(" ");
     try {
       const user = await User.findByPk(user_id);
 
-      const costs = await user.getCosts({
-        limit: limit || 100,
-        where: {
-          date:
-            date ||
-            sequelize.where(sequelize.fn("date", sequelize.col("date")), "<=", moment(new Date()).format("YYYY-MM-DD")),
-          user_id,
-        },
-        ...this._selectOptions,
-      });
+      let costs;
+
+      switch (typeof date) {
+        case "string":
+          costs = await user.getCosts({
+            limit: limit || 100,
+            where: {
+              date,
+              user_id,
+            },
+            ...this._selectOptions,
+          });
+          break;
+        case "object":
+          costs = await user.getCosts({
+            limit: limit || 100,
+            where: {
+              date: { [sequelize.Sequelize.Op.between]: [date[0], date[1]] },
+              user_id,
+            },
+            ...this._selectOptions,
+          });
+          break;
+        default:
+          costs = await user.getCosts({
+            limit: limit || 100,
+            where: {
+              date: sequelize.where(
+                sequelize.fn("date", sequelize.col("date")),
+                "<=",
+                moment(new Date()).format("YYYY-MM-DD")
+              ),
+              user_id,
+            },
+            ...this._selectOptions,
+          });
+      }
 
       return costs;
     } catch (err) {
